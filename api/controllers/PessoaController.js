@@ -1,9 +1,18 @@
 const database = require('../models')
 
 class PessoaController {
+  static async pegaPessoasAtivas(req, res){
+    try {
+      const pessoasAtivas = await database.Pessoas.findAll()
+      return res.status(200).json(pessoasAtivas)  
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
   static async pegaTodasAsPessoas(req, res){
     try {
-      const todasAsPessoas = await database.Pessoas.findAll()
+      const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
       return res.status(200).json(todasAsPessoas)  
     } catch (error) {
       return res.status(500).json(error.message)
@@ -114,6 +123,17 @@ class PessoaController {
     try {
       await database.Matriculas.destroy({ where: { id: Number(matriculaId) }})
       return res.status(200).json({ mensagem: `id ${matriculaId} deletado` })
+
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  }
+
+  static async pegaMatriculas(req, res) {
+    const { estudanteId } = req.params
+    try {
+      const matriculas = await database.Matriculas.findAll({ where: { estudante_id: Number(estudanteId) }})
+      return res.status(200).json(matriculas)
 
     } catch (error) {
       return res.status(500).json(error.message)
