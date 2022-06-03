@@ -40,14 +40,6 @@ module.exports = {
         role: 'docente',
         createdAt: new Date(),
         updatedAt: new Date()
-      },
-      {
-        nome: 'Sergio Lopes',
-        ativo: true,
-        email: 'sergio@sergio.com',
-        role: 'docente',
-        createdAt: new Date(),
-        updatedAt: new Date()
       }
     ], {})
   },
